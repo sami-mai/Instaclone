@@ -15,13 +15,41 @@
         <div class="container">
           <div class="navbar-header">
             <a class="navbar-brand" href="{% url 'home' %}">
-              <img src="static/images/if_Instaicon.png" width="30" height="30" alt="icon"><span></span>
+              <img src="..static/images/if_Instaicon.png" width="30" height="30" alt="icon"><span></span>
             </a>
             <a class="navbar-brand" href="{% url 'home' %}">InstaClone</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <button type="button" class="btn btn-default navbar-btn">Sign in</button>
             <button type="button" class="btn btn-default navbar-btn">Sign up</button>
+
+            <div class="">
+              {% if user.is_authenticated %}
+              <ul>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
+                                      <span class="caret"></span>
+                                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="{%url 'newsToday'%}">Home</a>
+                    </li>
+                    <li>
+                      <a href="/accounts/password/change">Change Password</a>
+                    </li>
+                    <li>
+                      <a href="/logout">Logout</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              {% else %}
+              <li>
+                <a class='btn btn-default' href="/accounts/login">Login</a>
+              </li>
+
+              {% endif %}
+            </div>
             <!-- Adding a search form  -->
             <div class="navbar-right pull-right">
 

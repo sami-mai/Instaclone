@@ -29,7 +29,7 @@
 </head>
 
 <body>
-
+  {% include "dashboard/dash-navbar.html" %}
   <!--  -->
   {% block content %}
   <h1 class='text-center'>She welcomes you</h1>
@@ -38,6 +38,10 @@
   <!--  -->
   {% block scripts %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.3.0/uploadcare.full.min.js"></script>
+  <script>
+    UPLOADCARE_PUBLIC_KEY = 'ba03197357ca50e579c3';
+  </script>
   {% bootstrap_javascript %}
   <!--  -->
   {% endblock %}
