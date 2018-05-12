@@ -12,7 +12,7 @@
         <img class="img-circle img-responsive" src="../../static/images/default.png" alt="display picture" style="width:200px; height:200px">
       </div>
       <div class="col-md-8">
-        <p><strong>[Your Username] </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'create' %}">Edit profile </a></p>
+        <p><strong>[Your Username] </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile </a></p>
         <p class="text-muted">0 posts 0 followers 0 following</p>
         <p><strong>[Your full name]</strong></p>
       </div>
@@ -33,7 +33,7 @@
       <h4><strong>Start capturing and sharing your moments.</strong></h4>
       <br>
       <h5 class="text-muted">Upload images now to share your first photo.<span>
-      <a type="button" class="btn btn-default btn-sm" href="{% url 'create' %}"><i class="glyphicon glyphicon-upload"></i></a>
+      <a type="button" class="btn btn-default btn-sm" href="{% url 'upload_photo' %}"><i class="glyphicon glyphicon-upload"></i></a>
 </span></h5>
     </div>
     <!-- <div class="col-md-2"></div> -->

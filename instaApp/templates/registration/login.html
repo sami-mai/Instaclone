@@ -1,43 +1,46 @@
 {%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
 <div class="container">
+
   <div class="text-center">
-    <h1><strong>InstaClone</strong></h1>
+    <h1 style="font-family: 'Cookie', cursive;"><strong>
+    <a href="{% url 'home' %}"><img src="../../static/images/if_Instaicon.png" width="30" height="30" alt="icon"></a>
+    InstaClone</strong></h1>
   </div>
   <hr>
 </div>
 <br>
 <br>
 <br>
-<div class="container">
-  <div class="row">
+<div class=" container ">
+  <div class="row ">
     <!-- empty div -->
-    <div class="col-md-1"></div>
-    <div class="col-md-5">
-      <img src="../../static/images/instaicon1.png" alt="InstaClone Logo" style="width:450px; height:450px">
+    <div class="col-md-1 "></div>
+    <div class="col-md-5 ">
+      <img src="../../static/images/instaicon1.png " alt="InstaClone Logo " style="width:450px; height:450px ">
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 ">
       <br>
       <br> {% if form.errors %}
       <p> Password or Username is incorrect </p>
       {% endif %}
-      <div class="panel panel-default">
+      <div class="panel panel-default ">
 
-        <div class="panel-heading">
-          <h3 class="text-center">Sign In</h3>
+        <div class="panel-heading ">
+          <h3 class="text-center ">Sign In</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body ">
 
-          <form action="/accounts/login/" method="post">
+          <form action="/accounts/login/ " method="post ">
             {% csrf_token %} {% bootstrap_form form%}
 
-            <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-sm" value="Login">
+            <div class="form-group ">
+              <input type="submit " class="btn btn-primary btn-sm " value="Login ">
               <br>
               <br>
-              <a href="/accounts/register" class="forgot">Don't have an account yet? Sign-up here ...</a>
+              <a href="/accounts/register " class="forgot ">Don't have an account yet? Sign-up here ...</a>
             </div>
 
-            <input type="hidden" name="next" value="{{next}}">
+            <input type="hidden" name="next " value="{{next}}">
 
           </form>
 
@@ -47,7 +50,7 @@
 
     </div>
     <!-- empty div -->
-    <div class="col-md-2"></div>
+    <div class="col-md-2 "></div>
   </div>
 </div>
 

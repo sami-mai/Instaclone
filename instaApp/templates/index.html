@@ -4,12 +4,12 @@
 <div class="container ">
 
   <div class="jumbotron text-center">
-    <h1><strong>InstaClone</strong></h1>
+    <h1 style="font-family: 'Cookie', cursive;"><strong>InstaClone</strong></h1>
     <br>
     <h3>Welcome the endless possibilities!</h3>
     <!-- <h2 class="text-muted">Your Feed</h2> -->
     <br>
-    <a type="button" class="btn btn-primary btn-lg" href="/accounts/profile">Edit your profile</a>
+    <a type="button" class="btn btn-primary btn-lg" href="{% url 'user_profile' current_user.id%}">Edit your profile</a>
   </div>
 
 </div>
@@ -49,7 +49,7 @@
 <div class="container ">
 
   <div class="jumbotron text-center">
-    <h1><strong>InstaClone</strong></h1>
+    <h1 style="font-family: 'Cookie', cursive;"><strong>InstaClone</strong></h1>
     <br>
     <p>Explore the endless possibilities!</p>
     <br>

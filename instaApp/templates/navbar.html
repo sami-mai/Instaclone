@@ -17,12 +17,12 @@
             <a class="navbar-brand" href="{% url 'home' %}">
               <img src="static/images/if_Instaicon.png" width="30" height="30" alt="icon"><span></span>
             </a>
-            <a class="navbar-brand" href="{% url 'home' %}">InstaClone</a>
+            <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Cookie', cursive;"><strong>InstaClone</strong></a>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
+          <div id=" navbar " class="navbar-collapse collapse ">
 
 
-            <div class="">
+            <div class=" ">
               {% if user.is_authenticated %}
               <!-- Adding a search form  -->
               <div class="navbar-right pull-right">
@@ -40,16 +40,18 @@
               </div>
               <!-- search form end -->
               <ul class="nav navbar-nav navbar-right">
+
                 <li>
-                  <a href="#"><i class="glyphicon glyphicon-upload"></i></a>
+                  <a href="{% url 'upload_photo' %}"><i class="glyphicon glyphicon-upload"></i></a>
                 </li>
+
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user"></i><span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li class=text-center text-muted>Signed in as ...</li>
+                    <li class=text-center text-muted>Signed in</li>
                     <li role="separator" class="divider"></li>
                     <li>
-                      <a href="/accounts/profile">Edit profile</a>
+                      <a href="{% url 'user_profile' current_user.id%}">Your profile</a>
                     </li>
                     <li>
                       <a href="#">Your followers</a>
@@ -68,9 +70,9 @@
                 </li>
               </ul>
               {% else %}
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="/accounts/login">Sign in</a></li>
-                <li><a href="/accounts/register">Sign up</a></li>
+              <ul class="nav navbar-nav navbar-right ">
+                <li><a href="/accounts/login ">Sign in</a></li>
+                <li><a href="/accounts/register ">Sign up</a></li>
               </ul>
 
 
