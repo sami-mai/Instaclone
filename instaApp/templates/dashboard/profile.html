@@ -1,9 +1,43 @@
 {%extends 'dashboard/dash-base.html'%}
 <!--  -->
-{% block content %}
-<!-- uploadcare widget -->
-<input type="hidden" role="uploadcare-uploader" name="my_file" />
-<input type="hidden" role="uploadcare-uploader" name="content" data-public-key="ba03197357ca50e579c3" data-images-only />
-<!-- end of uploadcare widget -->
+{% load static%}
 <!--  -->
+{% block content %}
+<br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="col-md-4">
+        <img class="img-circle img-responsive" src="../../static/images/default.png" alt="display picture" style="width:200px; height:200px">
+      </div>
+      <div class="col-md-8">
+        <p><strong>[Your Username] </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'create' %}">Edit profile </a></p>
+        <p class="text-muted">0 posts 0 followers 0 following</p>
+        <p><strong>[Your full name]</strong></p>
+      </div>
+
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <hr>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <img class="img-rounded img-responsive" src="../../static/images/gridimg.jpg" alt="InstaClone Logo" style="width:450px; height:450px">
+    </div>
+    <div class="col-md-6">
+      <br><br>
+      <h4><strong>Start capturing and sharing your moments.</strong></h4>
+      <br>
+      <h5 class="text-muted">Upload images now to share your first photo.<span>
+      <a type="button" class="btn btn-default btn-sm" href="{% url 'create' %}"><i class="glyphicon glyphicon-upload"></i></a>
+</span></h5>
+    </div>
+    <!-- <div class="col-md-2"></div> -->
+  </div>
+
+</div>
 {% endblock %}

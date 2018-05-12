@@ -8,68 +8,73 @@
 </head>
 
 <body>
-  <div class="navbar-wrapper">
-    <div class="container">
+  <div class="">
 
-      <nav class="navbar navbar-default navbar-static-top justify-content-between">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'home' %}">
-              <img src="..static/images/if_Instaicon.png" width="30" height="30" alt="icon"><span></span>
-            </a>
-            <a class="navbar-brand" href="{% url 'home' %}">InstaClone</a>
+    <nav class="navbar navbar-default navbar-static-top justify-content-between">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="../../static/images/if_Instaicon.png" width="30" height="30" alt="icon"><span></span>
+          </a>
+          <a class="navbar-brand" href="{% url 'home' %}">InstaClone</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <!-- Adding a search form  -->
+          <div class="navbar-right pull-right">
+
+            <form class="navbar-form" role="search" action="{% url 'home' %}">
+
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="category" aria-label="Search">
+                <div class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+              </div>
+
+            </form>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <button type="button" class="btn btn-default navbar-btn">Sign in</button>
-            <button type="button" class="btn btn-default navbar-btn">Sign up</button>
-
-            <div class="">
-              {% if user.is_authenticated %}
-              <ul>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
-                                      <span class="caret"></span>
-                                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="{%url 'newsToday'%}">Home</a>
-                    </li>
-                    <li>
-                      <a href="/accounts/password/change">Change Password</a>
-                    </li>
-                    <li>
-                      <a href="/logout">Logout</a>
-                    </li>
-                  </ul>
+          <!-- search form end -->
+          <ul class="nav navbar-nav navbar-right">
+            <!--  -->
+            <!-- <div class="menu-buttons">
+              <button </button>
+              <button class="btn btn-default" type="button" id="profile-but"></button>
+            </div> -->
+            <!--  -->
+            <li>
+              <a href="#"><i class="glyphicon glyphicon-upload"></i></a>
+            </li>
+            <li>
+              <a href="{%url 'home'%}">Feed</a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user"></i><span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li class=text-center text-muted>Signed in as ...</li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="#">Edit profile</a>
+                </li>
+                <li>
+                  <a href="#">Your followers</a>
+                </li>
+                <li>
+                  <a href="#">Your following</a>
+                </li>
+                <li>
+                  <a href="/accounts/password/change">Change Password</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="/logout">Logout</a>
                 </li>
               </ul>
-              {% else %}
-              <li>
-                <a class='btn btn-default' href="/accounts/login">Login</a>
-              </li>
-
-              {% endif %}
-            </div>
-            <!-- Adding a search form  -->
-            <div class="navbar-right pull-right">
-
-              <form class="navbar-form" role="search" action="{% url 'home' %}">
-
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search" name="category" aria-label="Search">
-                  <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                  </div>
-                </div>
-
-              </form>
-            </div>
-            <!-- search form end -->
-          </div>
+            </li>
+          </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
 
-    </div>
   </div>
 
 </body>

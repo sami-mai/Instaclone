@@ -1,32 +1,38 @@
 {%extends 'base.html'%}
 <!-- block content -->
-{% block content %}
+{% block content %} {% if user.is_authenticated %}
+<div class="container ">
 
-<div class="container-fluid jumbotron">
-  <br>
-  <div class="">
+  <div class="jumbotron text-center">
     <h1><strong>InstaClone</strong></h1>
-
+    <br>
+    <h3>Welcome the endless possibilities!</h3>
+    <!-- <h2 class="text-muted">Your Feed</h2> -->
+    <br>
+    <a type="button" class="btn btn-primary btn-lg" href="/accounts/profile">Edit your profile</a>
   </div>
 
 </div>
+
 <div class="container">
+
   <div class="row">
+    <div class="col-md-3"></div>
     <div class="col-md-6">
-      <img src="static/images/instaicon1.png" alt="InstaClone Logo">
-    </div>
-    <div class="col-md-6">
-      <div class="panel-body">
-        <h1>placeholder</h1>
+      <div class="row">
+        <h3 class="text-muted">Suggested for you</h3>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h1 class="text-muted text-center">Suggestions</h1>
 
+          </div>
+        </div>
       </div>
+      <div class="row"></div>
     </div>
-
+    <div class="col-md-3"></div>
   </div>
-
 </div>
-
-
 <!-- FOOTER -->
 <hr>
 <div class="container-fluid">
@@ -38,4 +44,39 @@
   </footer>
 </div>
 
-{% endblock %}
+<!-- end footer -->
+{% else %}
+<div class="container ">
+
+  <div class="jumbotron text-center">
+    <h1><strong>InstaClone</strong></h1>
+    <br>
+    <p>Explore the endless possibilities!</p>
+    <br>
+    <a type="button" class="btn btn-primary btn-lg" href="/accounts/login">Sign in</a>
+  </div>
+
+</div>
+
+<div class="container">
+  <h3>Don't have an account yet?... <small><a class="text-muted" href="/accounts/register">Register now!</a></small></h3>
+  <br><br><br>
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
+
+<!-- FOOTER -->
+<hr>
+<div class="container-fluid">
+
+  <footer>
+    <!-- <p class="pull-right"><a href="/">Back to top</a></p> -->
+    <p>&copy; 2018 Sami-Mai </p>
+    <!-- Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
+  </footer>
+  <!-- end footer -->
+</div>
+
+{% endif %} {% endblock %}
