@@ -1,36 +1,76 @@
-from django.http import Http404
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Profile, User, Image
+from .models import Profile, Image
+from .forms import UpdateProfile, CreateComment, NewImagePost
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'index.html')
+    images = Image.objects.all()
+    return render(request, 'index.html', {"images": images})
 
 
 '''
- limit only an authenticated User to view a full profile
+ limit only an authenticated User to view and update full profile
  '''
 
 
-@login_required(login_url='/login/')
-def profile(request, profile_id):
-    try:
-        profile = Profile.objects.get(id=profile_id)
-    except DoesNotExist:
-        raise Http404()
+@login_required(login_url='/accounts/login/')
+def user_profile(request):
+    current_user = request.user
+    profile = Profile.objects.get(user=current_user)
+    # photos = Profile.objects.filter(photos=current_user)
     return render(request, "dashboard/profile.html", {"profile": profile})
 
 
-# def search_results(request):
-#     if 'category' in request.GET and request.GET["category"]:
-#         search_term = request.GET.get('category')
-#         searched_images = Image.search_by_category(search_term)
-#         message = f"{search_term}"
-#
-#         return render(request, 'albums/search.html', {"message": message, "categories": searched_images})
-#
-#     else:
-#         message = "...You haven't searched for any term"
-#         return render(request, 'albums/search.html', {"message": message})
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    current_user = request.user
+
+    if request.method == 'POST':
+        form = UpdateProfile(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+            return HttpResponseRedirect('/accounts/profile')
+    else:
+        form = UpdateProfile()
+    # profile = Profile.objects.get(user=current_user)
+    return render(request, 'dashboard/profile.html', {"form": form})
+
+
+def single(request, image_id):
+
+    # images_id = Image.objects.get(id=image_id)
+    if request.method == 'POST':
+        form = CreateComment(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.image = images_id
+            comment.profile = request.user
+            comment.save()
+            HttpResponseRedirect('single')
+    else:
+        form = CreateComment()
+
+    # image = Image.objects.get(id=image_id)
+    comments = Comment.objects.filter(image=image_id)
+    return render(request, 'dashboard/single.html', {"comments": comments, "form": form})
+
+
+@login_required(login_url='/accounts/login/')
+def create(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewImagePost(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.profile = current_user
+            post.save()
+            HttpResponseRedirect('/accounts/profile')
+    else:
+
+        form = NewImagePost()
+    return render(request, 'dashboard/create_post.html', {"form": form})
