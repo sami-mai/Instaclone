@@ -9,12 +9,18 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
       <div class="col-md-4">
+        {% if profile.avatar %}
+        <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="display picture" style="width:200px; height:200px">
+        <!--  -->
+        {%else%}
         <img class="img-circle img-responsive" src="../../static/images/default.png" alt="display picture" style="width:200px; height:200px">
+        <!--  -->
+        {% endif%}
       </div>
       <div class="col-md-8">
-        <p><strong>[Your Username] </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile </a></p>
+        <p><strong>{{current_user.username}} </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile </a></p>
         <p class="text-muted">0 posts 0 followers 0 following</p>
-        <p><strong>[Your full name]</strong></p>
+        <p><strong>{{current_user.first_name}} {{current_user.last_name}}</strong></p>
       </div>
 
     </div>

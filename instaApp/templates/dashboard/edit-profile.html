@@ -5,52 +5,71 @@
 {% block content %} {% for profile in profiles %} {% empty %}
 <div class="container">
   <div class="row">
+    <div class="text-center">
+      <h3><strong>Edit Profile</strong></h3>
+    </div>
     <div class="col-md-3"></div>
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body text-center">
+          {% if profile.avatar %}
+          <img class="img-thumbnail img-responsive" src="{{profile.avatar.url}}" alt="display picture" style="width:200px; height:200px">
+          <h3>{{current_user.username}}</h3>
+          <!--  -->
+          {%else%}
           <img class="img-thumbnail img-responsive" src="../../static/images/default.png" alt="display picture" style="width:200px; height:200px">
           <br>
           <br>
           <p><strong>Add an Avatar</strong></p>
           <p class="text-muted">Add a profile photo so your friends know its you</p>
+          <!--  -->
+          {% endif%}
+
           <!-- <a type="button" class="btn btn-primary btn-block" href="{% url 'edit_profile' current_user.id %}">Update your profile picture</a> -->
 
         </div>
 
         <div class="container">
-          <form action="{% url 'edit_profile' current_user.id %}" method="post" enctype="multipart/form-data" style="width:400px;">
-            {%csrf_token%}
 
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:525px;">
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:525px;">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                       Personal Information</a></h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="panel-body">
-                    {% bootstrap_form user_form%}
-                    <input type="submit" class="btn btn-primary btn-block" value="Update">
-                  </div>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <form action="{% url 'edit_profile' current_user.id %}" method="post" enctype="multipart/form-data" style="width:400px;">
+                    {%csrf_token%}
+                    <div class="form-group">
+                      {% bootstrap_form user_form%} {% bootstrap_form profile_form%}
+                      <input type="submit" class="btn btn-primary btn-block" value="Update">
+                    </div>
+                  </form>
                 </div>
               </div>
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                  <h4 class="panel-title">
+            </div>
+            <!-- <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
                       <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         Profile Information
                       </a>
                     </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                  <div class="panel-body">
-                    {% bootstrap_form profile_form%}
-                    <input type="submit" class="btn btn-primary btn-block" value="Update">
-                  </div>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <form action="{% url 'edit_profile' current_user.id %}" method="post" enctype="multipart/form-data" style="width:400px;">
+                    {%csrf_token%}
+                    <div class="form-group">
+                      {% bootstrap_form profile_form%}
+                      <input type="submit" class="btn btn-primary btn-block" value="Update">
+                    </div>
+                  </form>
                 </div>
               </div>
-            </div>
+            </div> -->
+          </div>
           </form>
         </div>
       </div>
