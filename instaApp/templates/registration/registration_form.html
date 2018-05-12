@@ -1,21 +1,22 @@
 {%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
-<div class="container-fluid jumbotron">
-  <br>
-  <div class="">
+<div class="container">
+  <div class="text-center">
     <h1><strong>InstaClone</strong></h1>
-
   </div>
-
+  <hr>
+</div>
+<br>
+<br>
 </div>
 <div class="container">
   <div class="row">
     <!-- empty div -->
     <div class="col-md-1"></div>
-    <div class="col-md-6">
-      <img src="../../static/images/instaicon1.png" alt="InstaClone Logo">
+    <div class="col-md-5">
+      <img src="../../static/images/instaicon1.png" alt="InstaClone Logo" style="width:450px; height:450px">
     </div>
     <div class="col-md-4">
-      {% if form.errors %}
+      <br> {% if form.errors %}
       <p> Some Information Might be Incorrect </p>
       {% endif %}
       <div class="panel panel-default">
@@ -28,8 +29,8 @@
           <form action="/accounts/register/" method="post">
             {% csrf_token %} {% bootstrap_form form%}
             <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
-            </div>
+              <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+            </div><a href="/accounts/login" class="forgot">Already got an account? Login here ...</a>
 
             <input type="hidden" name="next" value="{{next}}">
 
@@ -41,7 +42,7 @@
 
     </div>
     <!-- empty div -->
-    <div class="col-md-1"></div>
+    <div class="col-md-2"></div>
   </div>
 </div>
 

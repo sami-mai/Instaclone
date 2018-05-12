@@ -1,22 +1,23 @@
 {%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
-<div class="container-fluid jumbotron">
-  <br>
-  <div class="">
+<div class="container">
+  <div class="text-center">
     <h1><strong>InstaClone</strong></h1>
-
   </div>
-
+  <hr>
 </div>
+<br>
+<br>
+<br>
 <div class="container">
   <div class="row">
     <!-- empty div -->
     <div class="col-md-1"></div>
-    <div class="col-md-6">
-      <img src="../../static/images/instaicon1.png" alt="InstaClone Logo">
+    <div class="col-md-5">
+      <img src="../../static/images/instaicon1.png" alt="InstaClone Logo" style="width:450px; height:450px">
     </div>
     <div class="col-md-4">
-
-      {% if form.errors %}
+      <br>
+      <br> {% if form.errors %}
       <p> Password or Username is incorrect </p>
       {% endif %}
       <div class="panel panel-default">
@@ -31,6 +32,9 @@
 
             <div class="form-group">
               <input type="submit" class="btn btn-primary btn-sm" value="Login">
+              <br>
+              <br>
+              <a href="/accounts/register" class="forgot">Don't have an account yet? Sign-up here ...</a>
             </div>
 
             <input type="hidden" name="next" value="{{next}}">
@@ -43,7 +47,7 @@
 
     </div>
     <!-- empty div -->
-    <div class="col-md-1"></div>
+    <div class="col-md-2"></div>
   </div>
 </div>
 
