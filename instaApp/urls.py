@@ -5,6 +5,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url('^$', views.home, name='home'),
+    url(r'^accounts/profile/', views.profile, name='profile'),
+    url(r'^accounts/single/', views.single, name='single'),
+    url(r'^accounts/create/', views.create, name='create'),
     # url(r'^search/', views.search_results, name='search_results'),
 ]
 
