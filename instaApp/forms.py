@@ -12,7 +12,7 @@ class NewImagePost(forms.ModelForm):
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 
 class EditProfile(forms.ModelForm):
