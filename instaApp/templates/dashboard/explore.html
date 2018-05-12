@@ -1,0 +1,146 @@
+{%extends 'base.html'%}
+<!-- block content -->
+{% block content %} {% if user.is_authenticated %}
+<div class="container ">
+
+  <div class="jumbotron text-center">
+    <h1><strong>InstaClone</strong></h1>
+    <br>
+    <h3>Welcome the endless possibilities!</h3>
+    <!-- <h2 class="text-muted">Your Feed</h2> -->
+    <br>
+    <a type="button" class="btn btn-primary btn-lg" href="/accounts/profile">Edit your profile</a>
+  </div>
+
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <!-- <div class="row">
+        <h3 class="text-muted">Suggested for you</h3>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h1 class="text-muted text-center">Suggestions</h1>
+
+          </div>
+        </div>
+      </div> -->
+      <div class="row"></div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row text-center" id="feed">
+    <h3 class="text-muted">Your Feed</h3>
+    <div class="col-md-4">
+      <a href="{% url 'single'}"><img class="img-responsive img-thumbnail" src="static/images/breakfast-bowl-unsplash.jpg" alt="" style="width:250px; height:200px">
+    </a>
+    </div>
+    <div class="col-md-4">
+      <img class="img-responsive img-thumbnail" src="static/images/breakfast-bowl-unsplash.jpg" alt="" style="width:250px; height:200px">
+    </div>
+    <!-- testing modal -->
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <a href="#" data-toggle="modal" data-target="#modal2">
+        <img class="img-responsive img-thumbnail" src="static/images/breakfast-bowl-unsplash.jpg" alt="" style="width:250px; height:200px">
+      <div class="caption">
+      <p>Food</p>
+    </div>
+  </a>
+    </div>
+    <!-- </div> -->
+    <!-- Large modal -->
+    <div class="modal fade bs-example-modal-lg" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-7">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Lemon Water</h4>
+                </div>
+                <div class="modal-body ">
+                  <div class="">
+                    <img class="featurette-image img-responsive center-block img-rounded" style="height: 450px; width: 600px;" src="static/images/lemonwater1.png" alt="image">
+                  </div>
+
+                  <div class="row">
+                    <p> Quench your thirst with some cold Lemon Water</p>
+                  </div>
+
+                  <div class="row">
+                    <p>Accra, Ghana</p>
+                    <p>Food</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of modal -->
+  </div>
+</div>
+<!-- FOOTER -->
+<hr>
+<div class="container-fluid">
+
+  <footer>
+    <p class="pull-right"><a href="/">Back to top</a></p>
+    <p>&copy; 2018 Sami-Mai </p>
+    <!-- Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
+  </footer>
+</div>
+
+<!-- end footer -->
+{% else %}
+<div class="container ">
+
+  <div class="jumbotron text-center">
+    <h1><strong>InstaClone</strong></h1>
+    <br>
+    <p>Explore the endless possibilities!</p>
+    <br>
+    <a type="button" class="btn btn-primary btn-lg" href="/accounts/login">Sign in</a>
+  </div>
+
+</div>
+
+<div class="container">
+  <h3>Don't have an account yet?... <small><a class="text-muted" href="/accounts/register">Register now!</a></small></h3>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <img class="img-responsive img-thumbnail" src="static/images/skywater-unsplash.jpg" alt="" style="width:250px; height:200px">
+    </div>
+    <div class="col-md-4">
+      <img class="img-responsive img-thumbnail" src="static/images/skywater-unsplash.jpg" alt="" style="width:250px; height:200px">
+    </div>
+    <div class="col-md-4">
+      <img class="img-responsive img-thumbnail" src="static/images/skywater-unsplash.jpg" alt="" style="width:250px; height:200px">
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<hr>
+<div class="container-fluid">
+
+  <footer>
+    <!-- <p class="pull-right"><a href="/">Back to top</a></p> -->
+    <p>&copy; 2018 Sami-Mai </p>
+    <!-- Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
+  </footer>
+  <!-- end footer -->
+</div>
+
+{% endif %} {% endblock %}

@@ -1,0 +1,34 @@
+{%extends 'base.html'%} {% load bootstrap3 %} {% block content%}
+<h1 class="text-center">Single view {{image.image_name}}</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="thumbnail">
+        <img src="{{image.image.url}}">
+        <div class="caption">
+          <p>Comments</p>
+          <form action="{% url 'single' image.id%}" method="post">
+            {%csrf_token%} {% bootstrap_form comment_form%}
+            <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
+          </form>
+
+          <p>{% if comments%} {%for comment in comments%}
+            <p>{{comment.comment}}</p>
+
+            {%endfor%} {%else%}
+            <p>No comments here.Be the first to comment</p>
+            {%endif%}
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+
+
+  </div>
+</div>
+
+
+{%endblock%}
