@@ -27,8 +27,8 @@ def user_profile(request, id):
 
     except DoesNotExists:
         raise Http404()
-
-    context = {"current_user": current_user, "photos": photos, "profile": profile}
+    comment_form = CreateComment()
+    context = {"current_user": current_user, "photos": photos, "profile": profile, "comment_form": comment_form}
     return render(request, 'dashboard/profile.html', context)
 
 
@@ -72,7 +72,7 @@ def upload_photo(request):
 
 
 @login_required(login_url='/accounts/login/')
-def single_post(request, image_id):
+def single_post(request, id):
     '''
     View function to display a single post, its comments and likes
     '''
