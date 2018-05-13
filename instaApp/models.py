@@ -5,9 +5,9 @@ from tinymce.models import HTMLField
 from django.dispatch import receiver
 
 
-'''
-tags model class
-'''
+class WelcomeEmailRecipients(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField()
 
 
 class Tag(models.Model):
@@ -86,7 +86,7 @@ class Image(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     likes = models.CharField(max_length=60)
-    Comments = models.CharField(max_length=60)
+    comments = models.CharField(max_length=60)
     tags = models.ManyToManyField(Tag)
     post_date = models.DateTimeField(auto_now_add=True)
 
