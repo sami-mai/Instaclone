@@ -1,16 +1,31 @@
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Image, Comment
-from .forms import EditProfile, CreateComment, NewImagePost, EditUserForm
+from .models import Profile, Image, Comment, WelcomeEmailRecipients
+from .forms import EditProfile, CreateComment, NewImagePost, EditUserForm, WelcomeEmailForm
 from django.db import transaction
+from .email import send_welcome_email
 
 
 # Create your views here.
 def home(request):
     images = Image.objects.all()
+    profiles = Profile.objects.all()
     current_user = request.user
-    return render(request, 'index.html', {"images": images, "current_user": current_user})
+    if request.method == 'POST':
+        form = WelcomeEmailForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+            recipient = WelcomeEmailRecipients(name=name, email=email)
+            recipient.save()
+            send_welcome_email(name, email)
+
+            HttpResponseRedirect('/accounts/login/')
+    else:
+        form = WelcomeEmailForm()
+    context = {"images": images, "current_user": current_user, "form":form, "profiles":profiles}
+    return render(request, 'index.html', context)
 
 
 '''
@@ -21,14 +36,15 @@ def home(request):
 @login_required(login_url='/accounts/login/')
 def user_profile(request, id):
     current_user = request.user
+
     try:
         profile = Profile.objects.get(user=current_user.id)
         photos = Image.objects.filter(user=current_user.id)
 
-    except DoesNotExists:
+    except DoesNotExist:
         raise Http404()
-    comment_form = CreateComment()
-    context = {"current_user": current_user, "photos": photos, "profile": profile, "comment_form": comment_form}
+
+    context = {"current_user": current_user, "photos": photos, "profile": profile,}
     return render(request, 'dashboard/profile.html', context)
 
 
@@ -72,30 +88,23 @@ def upload_photo(request):
 
 
 @login_required(login_url='/accounts/login/')
-def single_post(request, id):
-    '''
-    View function to display a single post, its comments and likes
-    '''
+def post_comment(request, image_id):
     current_user = request.user
-    try:
-        photo = Image.objects.get(id=id)
-        title = f'{current_post.user.username}\'s post'
-        comments = Comment.get_comments(id)
-        if request.method == 'POST':
-            comment_form = CreateComment(request.POST)
-            if comment_form.is_valid():
-                comment = comment_form.save(commit=False)
-                comment.image = images_id
-                comment.profile = request.user
-                comment.save()
-                HttpResponseRedirect('single_post')
-        else:
-            comment_form = CreateComment()
-
-    except DoesNotExist:
-        raise Http404()
+    images_id = Image.objects.get(id=image_id)
+    if request.method == 'POST':
+        comment_form = CreateComment(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.image = images_id
+            comment.user = request.user
+            comment.save()
+            return redirect('post_comment')
+    else:
+        comment_form = CreateComment()
+    photo = Image.objects.get(id=image_id)
+    comments = Comment.get_comments(photo=image_id)
     context = {"title": title, "photo": photo, "comments": comments, "comment_form": comment_form}
-    return render(request, 'dashboard/single.html', context)
+    return render(request, 'dashboard/post-comment.html', context)
 
 
 @login_required(login_url='/accounts/login/')
