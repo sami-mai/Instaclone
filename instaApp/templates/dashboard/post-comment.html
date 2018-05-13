@@ -1,5 +1,5 @@
-{%extends 'base.html'%} {% load bootstrap3 %} {% block content%}
-<h1 class="text-center">Single view {{photo.image_name}}</h1>
+{%extends 'dashboard/dash-base.html'%} {% load bootstrap3 %} {% block content%}
+<h1 class="text-center"> {{photo.image_name}}</h1>
 <div class="container">
   <div class="row">
     <div class="col-md-2"></div>
@@ -8,7 +8,7 @@
         <img src="{{photo.image.url}}">
         <div class="caption">
           <p>Comments</p>
-          <form action="{% url 'single' photo.id%}" method="post">
+          <form action="{% url 'post_comment' photo.id%}" method="post">
             {%csrf_token%} {% bootstrap_form comment_form%}
             <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
           </form>

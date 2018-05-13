@@ -1,0 +1,85 @@
+{% for photo in photos %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p><span>
+              <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="{{profile.user.username}}'s display picture" style="width:30px; height:30px">
+            </span><strong> {{current_user.username}} </strong></p>
+        </div>
+        <div class="panel-heading">
+
+          <a href="#" data-toggle="modal" data-target="#modal-{{photo.id}}">
+            <img class="img-rounded img-responsive" src="{{photo.image.url}}" alt="{{photo.image_name}}" style="width:550px; height:350px">
+            </a>
+
+        </div>
+        <div class="panel-body">
+          <div class="container">
+            <div class="row">
+              <p>
+                <i class="fa fa-heart-o fa-1x mr-2"></i>
+                <i class="fa fa-comment-o fa-1x"></i>
+                <i class="fa fa-bookmark-o fa-1x float-right mt-1"></i>
+              </p>
+            </div>
+          </div>
+
+          <p style="font-size:12px;" class="ml-2 mt-2"><span class="textsize"><strong>{{current_user.username}}  </strong></span> {{photo.image_caption}}</p>
+          <p class="text-muted ml-2" style="font-size:10px">{{photo.post_date|timesince}} ago</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+<!-- Large modal -->
+<div class="modal fade bs-example-modal-lg" id="modal-{{photo.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" style="width:1050px; height: 1000px;" role="document">
+    <div class="modal-content">
+      <!-- <div class="panel panel-default">
+        <div class="panel-body"> -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">{{photo.image_name}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-7">
+
+            <img src="{{photo.image.url}}" style="width:620px; height: 450px;" class="img-rounded img-responsive">
+
+          </div>
+
+
+          <div class="col-md-5">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <p> <strong>Comments</strong> </p>
+                <div class="panel panel-default">
+                  <div class="panel-body" style="height:600px;">
+
+                    <p>No comments... Be the first to <a href="{% url 'post_comment' photo.id %}">leave a comment.</a></p>
+
+                    <br>
+                    <p class="text-muted"><a href="{% url 'post_comment' photo.id %}">Add a comment...</a> </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end of modal -->
