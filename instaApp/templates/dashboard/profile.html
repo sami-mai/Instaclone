@@ -10,17 +10,18 @@
     <div class="col-md-8">
       <div class="col-md-4">
         {% if profile.avatar %}
-        <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="display picture" style="width:200px; height:200px">
+        <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="{{profile.user.username}}'s display picture" style="width:200px; height:200px">
         <!--  -->
         {% else %}
-        <img class="img-circle img-responsive" src="../../static/images/default.png" alt="display picture" style="width:200px; height:200px">
+        <img class="img-circle img-responsive" src="../../static/images/default.png" alt="default display picture" style="width:200px; height:200px">
         <!--  -->
         {% endif%}
       </div>
       <div class="col-md-8">
-        <p><strong>{{current_user.username}} </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile </a></p>
+        <p><strong>{{current_user.username}} </strong><a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile <i class="fa fa-cog fa-spin"></i></a></p>
         <p class="text-muted">0 posts 0 followers 0 following</p>
         <p><strong>{{current_user.first_name}} {{current_user.last_name}}</strong></p>
+        <p><strong>Bio: </strong>{{profile.bio}}</p>
       </div>
 
     </div>
@@ -36,14 +37,32 @@
     <div class="col-md-6">
 
       <div class="panel panel-default">
+        <div class="panel-body">
+          <p><span>
+              <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="{{profile.user.username}}'s display picture" style="width:30px; height:30px">
+            </span><strong> {{current_user.username}} </strong></p>
+        </div>
         <div class="panel-heading">
 
           <a href="#" data-toggle="modal" data-target="#modal-{{photo.id}}">
-            <img class="img-rounded img-responsive" src="{{photo.image.url}}" alt="InstaClone Logo" style="width:550px; height:350px">
+            <img class="img-rounded img-responsive" src="{{photo.image.url}}" alt="{{photo.image_name}}" style="width:550px; height:350px">
             </a>
 
         </div>
-        <div class="panel-body"></div>
+        <div class="panel-body">
+          <div class="container">
+            <div class="row">
+              <p>
+                <i class="fa fa-heart-o fa-1x mr-2"></i>
+                <i class="fa fa-comment-o fa-1x"></i>
+                <i class="fa fa-bookmark-o fa-1x float-right mt-1"></i>
+              </p>
+            </div>
+          </div>
+
+          <p style="font-size:12px;" class="ml-2 mt-2"><span class="textsize"><strong>{{current_user.username}}  </strong></span> {{photo.image_caption}}</p>
+          <p class="text-muted ml-2" style="font-size:10px">{{photo.post_date|timesince}} ago</p>
+        </div>
       </div>
 
     </div>
@@ -58,7 +77,9 @@
         <div class="panel-body"> -->
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title text-center">{{photo.image_name}}</h4>
+        <p>
+          <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="{{profile.user.username}}'s display picture" style="width:50px; height:50px"><strong> {{current_user.username}} </strong>
+        </p>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -72,27 +93,20 @@
 
           <div class="col-md-5">
             <div class="panel panel-default">
-              <div class="panel-body">
+              <div class="panel-heading">
                 <p> <strong>Comments</strong> </p>
-                <div class="panel panel-default">
-                  <div class="panel-body">
-                    {% if comments%}
-                    <!--  -->
-                    {%for comment in comments%}
-                    <p>{{comment.comment}}</p>
-
-                    {%endfor%}
-                    <!--  -->
-                    {%else%}
-                    <p>No comments... Be the first to leave comment</p>
-                    {%endif%}
-                  </div>
-                </div>
-                <form action="" method="post">
-                  {%csrf_token%} {% bootstrap_form comment_form%}
-                  <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
-                </form>
               </div>
+              <!-- <div class="panel panel-default"> -->
+              <div class="panel-body" style="height:400px;">
+
+                <p>No comments... Be the first to <a href="#">leave a comment.</a></p>
+
+                <br>
+                <p class="text-muted"><a href="#">Add a comment...</a> </p>
+              </div>
+              <!-- </div> -->
+
+
             </div>
           </div>
         </div>
