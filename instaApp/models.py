@@ -38,7 +38,6 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='avatar/', blank=True)
     bio = HTMLField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photos = models.ImageField(upload_to='uploads/', blank=True)
 
     def __str__(self):
         return self.user.username
@@ -86,7 +85,6 @@ class Image(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     likes = models.CharField(max_length=60)
-    comments = models.CharField(max_length=60)
     tags = models.ManyToManyField(Tag)
     post_date = models.DateTimeField(auto_now_add=True)
 
@@ -134,8 +132,8 @@ class Comment(models.Model):
     Comments model class
     '''
     comment = models.TextField(blank=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
