@@ -24,7 +24,8 @@ def home(request):
             HttpResponseRedirect('/accounts/login/')
     else:
         form = WelcomeEmailForm()
-    context = {"images": images, "current_user": current_user, "form":form, "profiles":profiles}
+    comment_form = CreateComment()
+    context = {"images": images, "current_user": current_user, "form":form, "profiles":profiles, "comment_form": comment_form}
     return render(request, 'index.html', context)
 
 
@@ -38,13 +39,14 @@ def user_profile(request, id):
     current_user = request.user
 
     try:
-        profile = Profile.objects.get(user=current_user.id)
-        photos = Image.objects.filter(user=current_user.id)
+        profile = Profile.objects.get(user=id)
+        photos = Image.objects.filter(user=id)
 
     except DoesNotExist:
         raise Http404()
 
-    context = {"current_user": current_user, "photos": photos, "profile": profile,}
+    comment_form = CreateComment()
+    context = {"current_user": current_user, "photos": photos, "profile": profile, "comment_form": comment_form}
     return render(request, 'dashboard/profile.html', context)
 
 
@@ -90,20 +92,20 @@ def upload_photo(request):
 @login_required(login_url='/accounts/login/')
 def post_comment(request, image_id):
     current_user = request.user
-    images_id = Image.objects.get(id=image_id)
+    current_image = Image.objects.get(id=image_id)
     if request.method == 'POST':
-        comment_form = CreateComment(request.POST)
+        comment_form = CreateComment(request.POST, request.FILES)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.image = images_id
-            comment.user = request.user
+            comment.image = current_image
+            comment.user = current_user
             comment.save()
-            return redirect('post_comment')
+
     else:
         comment_form = CreateComment()
-    photo = Image.objects.get(id=image_id)
-    comments = Comment.get_comments(photo=image_id)
-    context = {"title": title, "photo": photo, "comments": comments, "comment_form": comment_form}
+
+    comments = Comment.get_comments(image=current_image)
+    context = {"title": title, "current_image": current_image, "comments": comments, "comment_form": comment_form}
     return render(request, 'dashboard/post-comment.html', context)
 
 

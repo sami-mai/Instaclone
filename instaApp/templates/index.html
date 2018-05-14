@@ -1,9 +1,11 @@
-{%extends 'base.html'%}
+{%extends 'base.html'%}{% load bootstrap3 %}
 <!-- block content -->
-{% block content %} {% if user.is_authenticated %}
+{% block content %}
+<!--  -->
+{% if user.is_authenticated %}
 <div class="container ">
 
-  <div class="jumbotron text-center">
+  <div class="jumbotron text-center" style="background-color: white;">
     <h1 style="font-family: 'Cookie', cursive;"><strong>InstaClone</strong></h1>
     <br>
     <h3>Welcome the endless possibilities!</h3>
@@ -13,26 +15,159 @@
   </div>
 
 </div>
-
-<div class="container">
+<!-- <hr> -->
+<div class="container-fluid" style="background-color:#EAECEC; padding:20px; padding-top:40px;">
 
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-      <div class="row">
-        <h3 class="text-muted">Suggested for you</h3>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <h1 class="text-muted text-center">Suggestions</h1>
+      <div class="container">
 
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:525px;">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    See Suggestions</a></h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+
+              {% for profile in profiles %} {% if profile.user != current_user %}
+              <div class="panel-body">
+                <div class="container">
+                  <div class="row">
+
+
+                    <div class="col-md-1">
+                      {% if profile.avatar %}
+                      <a href="{% url 'user_profile' profile.user.id%}">
+                        <img class="img-circle img-responsive" src="{{profile.avatar.url}}" alt="{{profile.user.username}}'s display picture" style="width:45px; height:45px">
+                      </a>
+                      <!--  -->
+                      {% else %}
+                      <a href="{% url 'user_profile' profile.user.id%}">
+                        <img class="img-circle img-responsive" src="../../static/images/default.png" alt="default display picture" style="width:45px; height:45px">
+                      </a>
+                      <!--  -->
+                      {% endif%}
+                      <!--  -->
+
+                    </div>
+                    <div class="col-md-3">
+                      <h1 class="text-muted text-center">{{profile.user}}
+                    <span>
+                      <a type="button" class="btn btn-primary btn-sm" href="#">Follow</a>
+                    </span>
+                  </h1>
+                    </div>
+                    {% endif%}
+
+                  </div>
+
+                </div>
+              </div>
+              {% empty %}
+              <div class="panel-body">
+                <h1 class="text-muted text-center">Loading Suggestions</h1>
+
+              </div>
+              {% endfor %}
+              <div class="col-md-3"></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row"></div>
     </div>
-    <div class="col-md-3"></div>
   </div>
 </div>
+<!-- <hr> -->
+<!-- Explore images -->
+<div class="container">
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <h3 class="text-muted" style="padding-top:10px;">Explore</h3>
+      </div>
+      <div class="panel-body">
+        {% for image in images%} {% if profile.user != current_user %}
+        <div class="col-md-4"><a href="#" data-toggle="modal" data-target="#modal-{{image.id}}">
+          <img class="img-responsive" src="{{image.image.url}}" alt="{{image.user.username}}'s post" style="width:400px; height:250px; padding-top:10px;">
+          </a>
+        </div>
+        <!-- Large modal -->
+        <div class="modal fade bs-example-modal-lg" id="modal-{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div class="modal-dialog modal-lg" style="width:1050px; height: 1000px;" role="document">
+            <div class="modal-content">
+              <!-- <div class="panel panel-default">
+                <div class="panel-body"> -->
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div><a href="#">
+                  <img class="img-circle img-responsive" src="{{image.profile.avatar.url}}" alt="{{image.profile.user.username}}'s display picture" style="width:50px; height:50px"><span> <strong> {{image.profile.user.username}}   </strong></span>
+                </a></div>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+
+                  <div class="col-md-7">
+
+                    <img src="{{image.image.url}}" style="width:620px; height: 450px;" class="img-rounded img-responsive">
+
+                  </div>
+
+
+                  <div class="col-md-5">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <p> <strong>Comments</strong> </p>
+                      </div>
+                      <!-- <div class="panel panel-default"> -->
+                      <div class="panel-body" style="height:400px;">
+
+                        <p>No comments... Be the first to <a href="#">leave a comment.</a></p>
+
+                        <br>
+                        <p class="text-muted"><a href="#">Add a comment...</a> </p>
+                      </div>
+                      <!-- </div> -->
+                      <!--  -->
+                      <form action="#" method="post">
+                        {%csrf_token%} {% bootstrap_form comment_form%}
+                        <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
+                      </form>
+                      <!--  -->
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of modal -->
+        <!--  -->
+        {% endif%}
+        <!--  -->
+        {% empty%}
+
+        <div class="col-md-4">
+          <img class="img-thumbnail img-responsive" src="../../static/images/breakfast-bowl-unsplash.jpg" alt="default display picture" style="width:350px; height:350px">
+        </div>
+        <div class="col-md-4">
+          <img class="img-thumbnail img-responsive" src="../../static/images/breakfast-bowl-unsplash.jpg" alt="default display picture" style="width:150px; height:150px">
+        </div>
+        <div class="col-md-4">
+          <img class="img-thumbnail img-responsive" src="../../static/images/breakfast-bowl-unsplash.jpg" alt="default display picture" style="width:150px; height:150px">
+        </div>
+        {% endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end Explore images -->
+
 <!-- FOOTER -->
 <hr>
 <div class="container-fluid">
@@ -48,7 +183,7 @@
 {% else %}
 <div class="container ">
 
-  <div class="jumbotron text-center">
+  <div class="jumbotron text-center" style="background-color: white;">
     <h1 style="font-family: 'Cookie', cursive;"><strong>InstaClone</strong></h1>
     <br>
     <p>Explore the endless possibilities!</p>
@@ -57,14 +192,14 @@
   </div>
 
 </div>
-
+<hr>
 <div class="container">
   <h3>Don't have an account yet?... <small><a class="text-muted" href="/accounts/register">Register now!</a></small></h3>
   <br><br><br>
   <br>
   <br>
-  <br>
-  <br>
+
+
 </div>
 
 <!-- FOOTER -->
