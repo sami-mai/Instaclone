@@ -21,8 +21,8 @@
         <p><strong>{{profile.user}} </strong> {% if profile.user == current_user%}
           <a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile <i class="fa fa-cog fa-spin"></i></a> {% endif%}
         </p>
-        <p class="text-muted">0 posts 0 followers 0 following</p>
-        <p><strong>{{current_user.first_name}} {{current_user.last_name}}</strong></p>
+        <p class="text-muted">{{photos|length}} posts 0 followers 0 following</p>
+        <p><strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong></p>
         <p><strong>Bio: </strong>{{profile.bio}}</p>
       </div>
 
@@ -55,9 +55,9 @@
           <div class="container">
             <div class="row">
               <p>
-                <i class="fa fa-heart-o fa-1x mr-2"></i>
-                <i class="fa fa-comment-o fa-1x"></i>
-                <i class="fa fa-bookmark-o fa-1x float-right mt-1"></i>
+                <i class="fa fa-heart-o fa-1x mr-2" style="padding-right:20px;padding-left:10px;"></i>
+                <i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i>
+                <i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i>
               </p>
             </div>
           </div>
@@ -89,31 +89,49 @@
           <div class="col-md-7">
 
             <img src="{{photo.image.url}}" style="width:620px; height: 450px;" class="img-rounded img-responsive">
+            <br>
+            <div class="container">
+              <div class="row">
+                <p>
+                  <i class="fa fa-heart-o fa-1x mr-2" style="padding-right:20px;padding-left:10px;"></i>
+                  <i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i>
+                  <i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i>
+                </p>
+              </div>
 
+              <div class="row">
+                <p style="font-size:12px;" class="ml-2 mt-2"><span class="textsize"><strong>{{current_user.username}}  </strong></span> {{photo.image_caption}}</p>
+                <p class="text-muted ml-2" style="font-size:10px">{{photo.post_date|timesince}} ago</p>
+              </div>
+            </div>
           </div>
-
-
           <div class="col-md-5">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <p> <strong>Comments</strong> </p>
               </div>
-              <!-- <div class="panel panel-default"> -->
-              <div class="panel-body" style="height:400px;">
+
+              <div class="panel-body">
 
                 <p>No comments... Be the first to <a href="#">leave a comment.</a></p>
 
                 <br>
-                <p class="text-muted"><a href="#">Add a comment...</a> </p>
               </div>
-              <!-- </div> -->
               <!--  -->
-              <form action="#" method="post">
-                {%csrf_token%} {% bootstrap_form comment_form%}
-                <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
-              </form>
-              <!--  -->
-
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            </a></h4>
+                    <!--  -->
+                    <form action="#" method="post">
+                      {%csrf_token%} {% bootstrap_form comment_form%}
+                      <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
+                    </form>
+                    <!--  -->
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -135,12 +153,21 @@
       <img class="img-rounded img-responsive" src="../../static/images/gridimg.jpg" alt="InstaClone Logo" style="width:450px; height:450px">
     </div>
     <div class="col-md-6">
+      {% if profile.user == current_user%}
       <br><br>
       <h4><strong>Start capturing and sharing your moments.</strong></h4>
       <br>
       <h5 class="text-muted">Upload images now to share your first photo.<span>
       <a type="button" class="btn btn-default btn-sm" href="{% url 'upload_photo' %}"><i class="glyphicon glyphicon-upload"></i></a>
-      </span></h5>
+      </span></h5> {% else %}
+      <br><br>
+      <h2><strong>{{profile.user|title}} has no posts.</strong></h2>
+      <br>
+
+      <a type="button" class="btn btn-primary btn-sm" href="#">Follow</a>
+      </span>
+      </h5>
+      {% endif %}
     </div>
   </div>
 </div>

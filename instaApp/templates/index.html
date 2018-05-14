@@ -87,10 +87,11 @@
       <div class="row">
         <h3 class="text-muted" style="padding-top:10px;">Explore</h3>
       </div>
+
       <div class="panel-body">
         {% for image in images%} {% if profile.user != current_user %}
         <div class="col-md-4"><a href="#" data-toggle="modal" data-target="#modal-{{image.id}}">
-          <img class="img-responsive" src="{{image.image.url}}" alt="{{image.user.username}}'s post" style="width:400px; height:250px; padding-top:10px;">
+          <img class="img-responsive" src="{{image.image.url}}" alt="{{image.user.username}}'s post" style="width:400px; height:250px; padding-top:30px; ">
           </a>
         </div>
         <!-- Large modal -->
@@ -111,33 +112,59 @@
                   <div class="col-md-7">
 
                     <img src="{{image.image.url}}" style="width:620px; height: 450px;" class="img-rounded img-responsive">
+                    <br>
+                    <div class="container">
+                      <div class="row">
+                        <p>
+                          <i class="fa fa-heart-o fa-1x mr-2" style="padding-right:20px;padding-left:10px;"></i>
+                          <i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i>
+                          <i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i>
+                        </p>
+                      </div>
 
+                      <div class="row">
+                        <p style="font-size:12px;" class="ml-2 mt-2"><span class="textsize"><strong>{{profile.user.username}}  </strong></span> {{image.image_caption}}</p>
+                        <p class="text-muted ml-2" style="font-size:10px">{{image.post_date|timesince}} ago</p>
+                      </div>
+                    </div>
                   </div>
 
-
+                  <!-- Comments in modal -->
                   <div class="col-md-5">
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         <p> <strong>Comments</strong> </p>
                       </div>
-                      <!-- <div class="panel panel-default"> -->
-                      <div class="panel-body" style="height:400px;">
 
+                      <div class="panel-body">
+                        {%for comment in comments %}
+                        <div class="alert alert-success" role="alert">
+                          <p class="text-center">{{comment.comment}}</p>
+                        </div>
+
+                        {%empty%}
                         <p>No comments... Be the first to <a href="#">leave a comment.</a></p>
-
+                        {% endfor %}
                         <br>
-                        <p class="text-muted"><a href="#">Add a comment...</a> </p>
                       </div>
-                      <!-- </div> -->
                       <!--  -->
-                      <form action="#" method="post">
-                        {%csrf_token%} {% bootstrap_form comment_form%}
-                        <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
-                      </form>
-                      <!--  -->
-
+                      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    </a></h4>
+                            <!--  -->
+                            <form action="#" method="post">
+                              {%csrf_token%} {% bootstrap_form comment_form%}
+                              <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
+                            </form>
+                            <!--  -->
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <!-- End of Comments in modal -->
                 </div>
               </div>
               <div class="modal-footer">

@@ -5,12 +5,31 @@ from .models import Profile, Image, Comment, WelcomeEmailRecipients
 from .forms import EditProfile, CreateComment, NewImagePost, EditUserForm, WelcomeEmailForm
 from django.db import transaction
 from .email import send_welcome_email
+from django.contrib.auth import authenticate, login
 
 
 # Create your views here.
+# def my_login(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(username=username, password=password)
+#     if user is not None:
+#         if user.is_active:
+#             login(request, user)
+#             # Redirect to a success page.
+#             return redirect('home')
+#         else:
+#             raise Http404
+#             ...
+#     else:
+#         return redirect('home')
+#     return render(request, 'login.html')
+
+
 def home(request):
     images = Image.objects.all()
     profiles = Profile.objects.all()
+    comments = Comment.objects.all()
     current_user = request.user
     if request.method == 'POST':
         form = WelcomeEmailForm(request.POST)
@@ -25,7 +44,7 @@ def home(request):
     else:
         form = WelcomeEmailForm()
     comment_form = CreateComment()
-    context = {"images": images, "current_user": current_user, "form":form, "profiles":profiles, "comment_form": comment_form}
+    context = {"images": images, "current_user": current_user, "form":form, "profiles":profiles, "comment_form": comment_form, "comments":comments}
     return render(request, 'index.html', context)
 
 
@@ -94,13 +113,13 @@ def post_comment(request, image_id):
     current_user = request.user
     current_image = Image.objects.get(id=image_id)
     if request.method == 'POST':
-        comment_form = CreateComment(request.POST, request.FILES)
+        comment_form = CreateComment(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.image = current_image
             comment.user = current_user
             comment.save()
-
+            return redirect('home')
     else:
         comment_form = CreateComment()
 
