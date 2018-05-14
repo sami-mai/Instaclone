@@ -6,7 +6,7 @@ class WelcomeEmailForm(forms.Form):
     your_name = forms.CharField(label='First Name', max_length=30)
     email = forms.EmailField(label='Email')
 
-    
+
 class NewImagePost(forms.ModelForm):
     class Meta:
         model = Image
@@ -31,4 +31,4 @@ class CreateComment(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment']
-        exclude = ['image', 'profile', 'post_date']
+        # exclude = ['image', 'profile', 'post_date']
