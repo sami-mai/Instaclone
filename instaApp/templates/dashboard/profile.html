@@ -55,10 +55,14 @@
           <div class="container">
             <div class="row">
               <p>
+                <a href="{% url 'like_image' photo.id %}">
                 <i class="fa fa-heart-o fa-1x mr-2" style="padding-right:20px;padding-left:10px;"></i>
-                <i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i>
-                <i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i>
+                </a>
+
+                <a href="#"><i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i></a>
+                <a href="#"><i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i></a>
               </p>
+              <p>{{photo.likes.count}}<em> likes</em></p>
             </div>
           </div>
 

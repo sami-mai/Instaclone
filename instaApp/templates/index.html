@@ -116,10 +116,14 @@
                     <div class="container">
                       <div class="row">
                         <p>
+                          <a href="{% url 'like_image' image.id %}">
                           <i class="fa fa-heart-o fa-1x mr-2" style="padding-right:20px;padding-left:10px;"></i>
-                          <i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i>
-                          <i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i>
+                          </a>
+
+                          <a href="#"><i class="fa fa-comment-o fa-1x" style="padding-right:250px;"></i></a>
+                          <a href="#"><i class="fa fa-bookmark-o fa-1x float-right mt-1" style="padding-left:180px;"></i></a>
                         </p>
+                        <p>{{image.likes.count}}<em> likes</em></p>
                       </div>
 
                       <div class="row">
@@ -154,10 +158,12 @@
                             <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     </a></h4>
                             <!--  -->
+
                             <form action="#" method="post">
                               {%csrf_token%} {% bootstrap_form comment_form%}
                               <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
                             </form>
+
                             <!--  -->
                           </div>
                         </div>
