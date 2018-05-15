@@ -84,7 +84,7 @@ class Image(models.Model):
     image_caption = HTMLField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    likes = models.CharField(max_length=60)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     tags = models.ManyToManyField(Tag)
     post_date = models.DateTimeField(auto_now_add=True)
 
