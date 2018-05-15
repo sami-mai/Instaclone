@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import dj_database_url
 from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import django.conf.global_settings as DEFAULT_SETTINGS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +31,14 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# cloudinary
+# cloudinary.config(
+#   cloud_name = "sample",
+#   api_key = "874837483274837",
+#   api_secret = "a676b67565c6767a6767d6767f676fe1"
+# )
+
+
 ALLOWED_HOSTS = ['*']
 
 # Email configurations remember to install python-decouple
@@ -36,6 +48,8 @@ EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+# HMAC
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window; you may, of course, use a different value.
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,7 +61,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'instaApp',
     'bootstrap3',
-    'tinymce'
+    'tinymce',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [

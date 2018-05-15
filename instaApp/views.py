@@ -6,6 +6,9 @@ from .forms import EditProfile, CreateComment, NewImagePost, EditUserForm, Welco
 from django.db import transaction
 from .email import send_welcome_email
 from django.contrib.auth import authenticate, login
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 # Create your views here.
@@ -124,19 +127,20 @@ def post_comment(request, image_id):
         comment_form = CreateComment()
 
     comments = Comment.get_comments(image=current_image)
-    context = {"title": title, "current_image": current_image, "comments": comments, "comment_form": comment_form}
+    context = {"title": title, "current_image": current_image, "comments": comments, "comment_form": comment_form, "current_user": current_user}
     return render(request, 'dashboard/post-comment.html', context)
 
 
 @login_required(login_url='/accounts/login/')
 def search_results(request):
+    current_user = request.user
     if 'profile' in request.GET and request.GET['profile']:
             search_term = request.GET.get('profile')
-            searched_photos = Profile.search_profile(search_term)
+            searched_profiles = Profile.find_profile(search_term)
             message = f"{search_term}"
-            context = {"message": message, "searched_photos": searched_photos}
-            return render(request, 'all-instagram/search.html', context)
+            context = {"message": message, "profiles": searched_profiles, "current_user": current_user}
+            return render(request, 'dashboard/search.html', context)
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'dashboard/search.html', {"message": message})
+        return render(request, 'dashboard/search.html', {"message": message, "current_user": current_user})

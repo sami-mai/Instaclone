@@ -102,7 +102,7 @@
                 <div class="panel-body"> -->
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div><a href="#">
+                <div><a href="{% url 'user_profile' image.profile.user.id%}">
                   <img class="img-circle img-responsive" src="{{image.profile.avatar.url}}" alt="{{image.profile.user.username}}'s display picture" style="width:50px; height:50px"><span> <strong> {{image.profile.user.username}}   </strong></span>
                 </a></div>
               </div>
