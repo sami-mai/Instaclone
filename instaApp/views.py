@@ -11,22 +11,17 @@ import cloudinary.uploader
 import cloudinary.api
 
 
-# Create your views here.
-# def my_login(request):
-#     username = request.POST['username']
-#     password = request.POST['password']
-#     user = authenticate(username=username, password=password)
-#     if user is not None:
-#         if user.is_active:
-#             login(request, user)
-#             # Redirect to a success page.
-#             return redirect('home')
-#         else:
-#             raise Http404
-#             ...
-#     else:
-#         return redirect('home')
-#     return render(request, 'login.html')
+def like_image(request, image_id):
+    image = Image.objects.get(pk=image_id)
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+            image.likes.remove(request.user)
+            is_liked = False
+
+    else:
+        image.likes.add(request.user)
+        is_liked = True
+    return redirect('user_profile', image.user.id)
 
 
 def home(request):
