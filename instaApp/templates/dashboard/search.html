@@ -1,6 +1,5 @@
 {%extends 'dashboard/dash-base.html'%} {% block content %}
-<br>
-<br><br>
+
 <br>
 <br>
 <div class="container">
@@ -11,7 +10,7 @@
         <h2>Found {{ profiles|length }} results for "<em>{{message}}</em>".</h2>
         <!--  -->
         {% else %}
-        <h2> Found 0 profiles for the search term "<em>{{message}}</em>".</h2> {% endif %}
+        <h2> No profiles matching "<em>{{message}}</em>" were found.</h2> {% endif %}
       </div>
     </div>
     {% if profiles%}
