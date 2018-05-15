@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^accounts/upload-photo/', views.upload_photo, name='upload_photo'),
     url(r'^accounts/post-comment/(/d+)', views.post_comment, name='post_comment'),
     url(r'^search/', views.search_results, name='search_results'),
+    url(r'^likes/(\d+)', views.like_image, name='like_image')
 ]
 
 
