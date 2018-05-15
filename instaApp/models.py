@@ -116,9 +116,7 @@ class Image(models.Model):
 
     @classmethod
     def get_photos(cls):
-
         photos = Image.objects.all()
-
         return photos
 
     @classmethod
