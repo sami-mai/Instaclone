@@ -8,7 +8,7 @@
     <div class="panel-heading">
       <div class="panel-title">
         {% if profiles%}
-        <h2>Found {{ profiles|length }} of searched term "<em>{{message}}</em>".</h2>
+        <h2>Found {{ profiles|length }} results for "<em>{{message}}</em>".</h2>
         <!--  -->
         {% else %}
         <h2> Found 0 profiles for the search term "<em>{{message}}</em>".</h2> {% endif %}
@@ -21,10 +21,10 @@
 
         <div class="col-xs-3 col-sm-3 col-md-3">
           {% if profile.avatar%}
-          <a href="#" data-toggle="modal" data-target="#modal-{{profile.id}}">
+          <a href="{% url 'user_profile' profile.user.id%}">
             <img src="{{profile.avatar.url}}" class="img-responsive" alt="{{profile.user}}" style="width:200px; height:200px">
           </a> {%else%}
-          <a href="#" data-toggle="modal" data-target="#modal-{{profile.id}}">
+          <a href="{% url 'user_profile' profile.user.id%}">
             <img class="img-circle img-responsive" src="../../static/images/default.png" alt="default display picture" style="width:200px; height:200px">
           </a> {%endif%}
           <div class="caption">
