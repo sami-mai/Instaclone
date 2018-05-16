@@ -21,7 +21,7 @@ def like_image(request, image_id):
     else:
         image.likes.add(request.user)
         is_liked = True
-    return redirect('user_profile', image.user.id)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def home(request):
