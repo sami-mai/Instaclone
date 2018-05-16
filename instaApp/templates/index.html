@@ -55,7 +55,7 @@
                     <div class="col-md-3">
                       <h1 class="text-muted text-center">{{profile.user}}
                     <span>
-                      <a type="button" class="btn btn-primary btn-sm" href="#">Follow</a>
+                      <a type="button" class="btn btn-primary btn-sm" href="{% url 'user_profile' profile.user.id%}">See profile</a>
                     </span>
                   </h1>
                     </div>

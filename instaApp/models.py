@@ -35,9 +35,10 @@ class Profile(models.Model):
     '''
     Profile model class
     '''
-    avatar = models.ImageField(upload_to='avatar/', blank=True)
+    avatar = models.ImageField(upload_to='avatar/', blank=True, null=True)
     bio = HTMLField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    following = models.ManyToManyField(User, related_name='following_me', blank=True)
 
     def __str__(self):
         return self.user.username

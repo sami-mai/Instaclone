@@ -19,9 +19,22 @@
       </div>
       <div class="col-md-8">
         <p><strong>{{profile.user}} </strong> {% if profile.user == current_user%}
-          <a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile <i class="fa fa-cog fa-spin"></i></a> {% endif%}
+          <a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile <i class="fa fa-cog fa-spin"></i></a>
+          <!--  -->
+          {%else%}
+          <!-- <a type="button" class="btn btn-primary btn-sm" href="#">Follow</a> -->
+          <!--  -->
+          {%if is_follow %}
+          <a type="button" class="btn btn-primary btn-sm" href="{%url 'follow' profile.id %}" style="color:white;">Unfollow</a>
+          <!--  -->
+          {% else %}
+          <a type="button" class="btn btn-primary btn-sm" href="{%url 'follow' profile.id %}" style="color:white;">Follow</a>
+          <!--  -->
+          {% endif %}
+          <!--  -->
+          {% endif%}
         </p>
-        <p class="text-muted">{{photos|length}} posts 0 followers 0 following</p>
+        <p class="text-muted">{{photos|length}} posts {{profile.following|length}} followers 0 following</p>
         <p><strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong></p>
         <p><strong>Bio: </strong>{{profile.bio}}</p>
       </div>
@@ -172,7 +185,7 @@
       <h2><strong>{{profile.user|title}} has no posts.</strong></h2>
       <br>
 
-      <a type="button" class="btn btn-primary btn-sm" href="#">Follow</a>
+
       </span>
       </h5>
       {% endif %}

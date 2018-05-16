@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Image, Comment, WelcomeEmailRecipients
+from .models import Profile, Image, Comment, WelcomeEmailRecipients, User
 from .forms import EditProfile, CreateComment, NewImagePost, EditUserForm, WelcomeEmailForm
 from django.db import transaction
 from .email import send_welcome_email
@@ -54,7 +54,7 @@ def home(request):
 @login_required(login_url='/accounts/login/')
 def user_profile(request, id):
     current_user = request.user
-
+    follower = Profile.objects.get(id=current_user.id)
     try:
         profile = Profile.objects.get(user=id)
         photos = Image.objects.filter(user=id)
@@ -62,8 +62,12 @@ def user_profile(request, id):
     except DoesNotExist:
         raise Http404()
 
+    is_follow = False
+    if follower.following.filter(id=id).exists():
+        is_follow = True
+
     comment_form = CreateComment()
-    context = {"current_user": current_user, "photos": photos, "profile": profile, "comment_form": comment_form}
+    context = {"current_user": current_user, "photos": photos, "profile": profile, "comment_form": comment_form}  #, "is_follow": is_follow}
     return render(request, 'dashboard/profile.html', context)
 
 
@@ -139,3 +143,18 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'dashboard/search.html', {"message": message, "current_user": current_user})
+
+
+def follow(request, user_id):
+    current_user = request.user
+    follower = Profile.objects.get(user=current_user.id)
+    following = User.objects.get(id=user_id)
+    is_follow = False
+    if follower.following.filter(id=user_id).exists():
+        follower.following.remove(following)
+        is_follow = False
+    else:
+        follower.following.add(following)
+        is_follow = True
+
+    return redirect(user_profile, following.id)
