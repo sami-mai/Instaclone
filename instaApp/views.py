@@ -21,7 +21,7 @@ def like_image(request, image_id):
     else:
         image.likes.add(request.user)
         is_liked = True
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def home(request):
@@ -109,20 +109,20 @@ def upload_photo(request):
 @login_required(login_url='/accounts/login/')
 def post_comment(request, image_id):
     current_user = request.user
-    current_image = Image.objects.get(id=image_id)
+    photo = Image.get_photo_by_id(id=image_id)
     if request.method == 'POST':
         comment_form = CreateComment(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.image = current_image
+            comment.image = photo
             comment.user = current_user
             comment.save()
-            return redirect('home')
+            HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         comment_form = CreateComment()
 
     comments = Comment.get_comments(image=current_image)
-    context = {"title": title, "current_image": current_image, "comments": comments, "comment_form": comment_form, "current_user": current_user}
+    context = {"title": title, "photo": photo, "comments": comments, "comment_form": comment_form, "current_user": current_user}
     return render(request, 'dashboard/post-comment.html', context)
 
 

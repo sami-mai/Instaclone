@@ -1,14 +1,14 @@
 {%extends 'dashboard/dash-base.html'%} {% load bootstrap3 %} {% block content%}
-<h1 class="text-center"> {{photo.image_name}}</h1>
+<h1 class="text-center"> {{current_image.image_name}}</h1>
 <div class="container">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
       <div class="thumbnail">
-        <img src="{{photo.image.url}}">
+        <img src="{{current_image.image.url}}">
         <div class="caption">
           <p>Comments</p>
-          <form action="{% url 'post_comment' photo.id%}" method="post">
+          <form action="#" method="post">
             {%csrf_token%} {% bootstrap_form comment_form%}
             <input type="submit" class="btn btn-sm btn-primary" name="" value="Comment">
           </form>

@@ -61,7 +61,7 @@ class Profile(models.Model):
     '''
     @classmethod
     def update_profile(cls, id, bio):
-        update = Image.objects.filter(id=id).update(bio=bio)
+        update = cls.objects.filter(id=id).update(bio=bio)
         return update
 
     @classmethod
@@ -71,7 +71,7 @@ class Profile(models.Model):
 
     @classmethod
     def get_profiles(cls):
-        profiles = Profile.objects.all()
+        profiles = cls.objects.all()
         return profiles
 
 
@@ -111,17 +111,18 @@ class Image(models.Model):
     Class method that Allows us to get a image using a its ID.
     '''
     @classmethod
-    def get_photo_by_id(cls, id):
-        pass
+    def get_photo_by_id(cls, image_id):
+        photos = cls.objects.get(id=image_id)
+        return photos
 
     @classmethod
     def get_photos(cls):
-        photos = Image.objects.all()
+        photos = cls.objects.all()
         return photos
 
     @classmethod
     def get_profile_photos(cls, profile_id):
-        profile_images = Image.objects.filter(profile=profile_id).all()
+        profile_images = cls.objects.filter(profile=profile_id).all()
         return profile_images
 
 
@@ -139,5 +140,5 @@ class Comment(models.Model):
 
     @classmethod
     def get_comments(cls, image_id):
-        comments = Comment.objects.filter(image=image_id)
+        comments = cls.objects.filter(image=image_id)
         return comments
