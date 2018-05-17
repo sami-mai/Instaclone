@@ -20,6 +20,32 @@
       <div class="col-md-8">
         <p><strong>{{profile.user}} </strong> {% if profile.user == current_user%}
           <a type="button" class="btn btn-default btn-sm" href="{% url 'edit_profile' current_user.id %}">Edit profile <i class="fa fa-cog fa-spin"></i></a>
+          <div class="panel panel-default" style="width:350px;">
+            <div class="panel-body">
+              <h1>Following</h1>
+              <!--  -->
+              {{profile.following|length}}
+              <!--  -->
+              {% for user in object.profile.following.all%} {{user.username}}
+              <!--  -->
+              {%empty%}
+              <h4>Not following any users</h4>
+              <!--  -->
+              {% endfor%}
+              <hr>
+              <h1>Followed By</h1>
+              <!--  -->
+              {{profile.followed_by|length}}
+              <!--  -->
+              {% for profile in object.profile.followed_by.all%} {{profile.user.username}}
+              <!--  -->
+              {%empty%}
+              <h4>Not followed by any users</h4>
+              <!--  -->
+              {% endfor%}
+            </div>
+
+          </div>
           <!--  -->
           {%else%}
           <!-- <a type="button" class="btn btn-primary btn-sm" href="#">Follow</a> -->
@@ -31,6 +57,7 @@
           <a type="button" class="btn btn-primary btn-sm" href="{%url 'follow' profile.id %}" style="color:white;">Follow</a>
           <!--  -->
           {% endif %}
+
           <!--  -->
           {% endif%}
         </p>

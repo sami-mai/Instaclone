@@ -5,40 +5,17 @@ from tinymce.models import HTMLField
 from django.dispatch import receiver
 
 
-class WelcomeEmailRecipients(models.Model):
-    name = models.CharField(max_length=30)
-    email = models.EmailField()
-
-
-class Tag(models.Model):
-    '''
-    Tag nodel class that defines categories of posts and tags on posts
-    '''
-    name = models.CharField(max_length=30, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    def save_tag(self):
-        self.save()
-
-    def delete_tag(self):
-        self.delete()
-
-    @classmethod
-    def get_tags(cls):
-        tags = Tag.objects.all()
-        return tags
-
-
 class Profile(models.Model):
     '''
     Profile model class
     '''
     avatar = models.ImageField(upload_to='avatar/', blank=True, null=True)
     bio = HTMLField()
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    following = models.ManyToManyField(User, related_name='following_me', blank=True)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    # user.profile
+    following = models.ManyToManyField(User, related_name='followed_by', blank=True)
+    # user.profile.following -- users I follow
+    # user.followed_by -- users that follow me -- reverse relationship
 
     def __str__(self):
         return self.user.username
@@ -74,6 +51,27 @@ class Profile(models.Model):
     def get_profiles(cls):
         profiles = cls.objects.all()
         return profiles
+
+
+class Tag(models.Model):
+    '''
+    Tag nodel class that defines categories of posts and tags on posts
+    '''
+    name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def save_tag(self):
+        self.save()
+
+    def delete_tag(self):
+        self.delete()
+
+    @classmethod
+    def get_tags(cls):
+        tags = Tag.objects.all()
+        return tags
 
 
 class Image(models.Model):
@@ -143,3 +141,8 @@ class Comment(models.Model):
     def get_comments(cls, image_id):
         comments = cls.objects.filter(image=image_id)
         return comments
+
+
+class WelcomeEmailRecipients(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField()
