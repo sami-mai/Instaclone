@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'', include('instaApp.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     # url(r'^accounts/', include('registration.backends.hmac.urls')),
+    # url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, {"next_page": '/'}),
     url(r'^tinymce/', include('tinymce.urls')),
 ]
